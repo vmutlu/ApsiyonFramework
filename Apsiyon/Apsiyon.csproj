@@ -1,0 +1,34 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net5.0</TargetFramework>
+    <Authors>Veysel MUTLU</Authors>
+    <Description>Apsiyon framework is a helpful framework that creates your .Net projects in the simplest way, does cross cutting concerns for you and helps you to write code faster in your projects.</Description>
+    <PackageLicenseExpression>MIT</PackageLicenseExpression>
+    <PackageTags>AOP, Aspect, Validations, Exceptions, Logs, Cross Cutting Concors</PackageTags>
+  </PropertyGroup>
+
+	<ItemGroup>
+		<PackageReference Include="Autofac" Version="6.1.0" />
+		<PackageReference Include="Autofac.Extensions.DependencyInjection" Version="7.1.0" />
+		<PackageReference Include="Autofac.Extras.DynamicProxy" Version="6.0.0" />
+		<PackageReference Include="AutoMapper" Version="10.1.1" />
+		<PackageReference Include="FluentValidation" Version="9.5.1" />
+		<PackageReference Include="log4net" Version="2.0.12" />
+		<PackageReference Include="MicroKnights.Log4NetAdoNetAppender" Version="2.2.0" />
+		<PackageReference Include="Microsoft.AspNetCore.Http" Version="2.2.2" />
+		<PackageReference Include="Microsoft.AspNetCore.Http.Abstractions" Version="2.2.0" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore" Version="5.0.5" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" Version="5.0.5" />
+		<PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="5.0.5">
+			<PrivateAssets>all</PrivateAssets>
+			<IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+		</PackageReference>
+		<PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="3.1.12" />
+		<PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.8.0" />
+		<PackageReference Include="NETStandard.Library" Version="2.0.3" />
+		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
+		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.8.0" />
+	</ItemGroup>
+	
+</Project>
