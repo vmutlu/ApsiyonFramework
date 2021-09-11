@@ -9,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace Apsiyon.DataAcccess.EntityFramework
 {
-    public class EfRepositoryBase<TEntity, TContext> : IEntityRepository<TEntity> where TEntity : class, IEntity, new() where TContext : DbContext, new()
+    public class EfRepositoryBase<TEntity, TContext> : IEntityRepository<TEntity> where TEntity : Entity, new() where TContext : DbContext, new()
     {
         protected TContext Context { get; }
         protected readonly DbSet<TEntity> dbSet;

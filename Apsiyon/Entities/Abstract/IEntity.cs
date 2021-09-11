@@ -1,7 +1,7 @@
 ﻿namespace Apsiyon.Entities.Abstract
 {
-    public interface IEntity
+    public class Entity
     {
-        public int Id { get; set; }
+        public virtual int Id { get; set; }
     }
 }

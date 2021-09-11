@@ -3,9 +3,8 @@ using System;
 
 namespace Apsiyon.Entities.Concrete
 {
-    public class Logs : IEntity
+    public class Logs : Entity
     {
-        public int Id { get; set; }
         public string Detail { get; set; }
         public DateTime Date { get; set; }
         public string Audit { get; set; }
