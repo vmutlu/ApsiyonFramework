@@ -3,6 +3,7 @@ using Apsiyon.Utilities.Linq;
 using Apsiyon.Utilities.Results;
 using Microsoft.EntityFrameworkCore;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
 using System.Threading.Tasks;
@@ -32,7 +33,7 @@ namespace Apsiyon.DataAcccess.EntityFramework
             Context.SaveChanges();
         }
 
-        public async Task<IQueryable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> filter = null, PaginationQuery paginationQuery = null, params Expression<Func<TEntity, object>>[] includeEntities)
+        public async Task<List<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> filter = null, PaginationQuery paginationQuery = null, params Expression<Func<TEntity, object>>[] includeEntities)
         {
             IQueryable<TEntity> query = Context.Set<TEntity>();
 
@@ -48,7 +49,7 @@ namespace Apsiyon.DataAcccess.EntityFramework
                 query = query.Skip(skip).Take(paginationQuery.PageSize);
             }
 
-            return query;
+            return await query.ToListAsync();
         }
 
         public async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> filter, params Expression<Func<TEntity, object>>[] includeEntities)
