@@ -2,7 +2,8 @@
 {
     public interface IResult
     {
-        public bool Success { get; }
-        public string Message { get; }
+        int StatusCode { get; }
+        bool Success { get; }
+        string Message { get; }
     }
 }

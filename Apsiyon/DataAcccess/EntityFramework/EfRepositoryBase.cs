@@ -24,13 +24,13 @@ namespace Apsiyon.DataAcccess.EntityFramework
         public async Task AddAsync(TEntity entity)
         {
             await Context.Set<TEntity>().AddAsync(entity).ConfigureAwait(false);
-            Context.SaveChanges();
+            await Context.SaveChangesAsync();
         }
 
         public async Task DeleteAsync(TEntity entity)
         {
             await Task.Run(() => { Context.Set<TEntity>().Remove(entity); });
-            Context.SaveChanges();
+            await Context.SaveChangesAsync();
         }
 
         public async Task<List<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> filter = null, PaginationQuery paginationQuery = null, params Expression<Func<TEntity, object>>[] includeEntities)
@@ -67,7 +67,7 @@ namespace Apsiyon.DataAcccess.EntityFramework
         public async Task UpdateAsync(TEntity entity)
         {
             await Task.Run(() => { Context.Set<TEntity>().Update(entity); });
-            Context.SaveChanges();
+            await Context.SaveChangesAsync();
         }
     }
 }

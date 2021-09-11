@@ -1,4 +1,6 @@
-﻿namespace Apsiyon.Utilities.Results
+﻿using System.Net;
+
+namespace Apsiyon.Utilities.Results
 {
     public class ErrorDataResult<T> : DataResult<T>
     {
@@ -13,6 +15,11 @@
         }
 
         public ErrorDataResult(string message) : base(default, false, message)
+        {
+
+        }
+
+        public ErrorDataResult(HttpStatusCode statusCode, string message) : base(default, false, message, statusCode)
         {
 
         }
