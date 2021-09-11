@@ -1,63 +1,72 @@
 ﻿using Apsiyon.Entities.Abstract;
+using Apsiyon.Utilities.Linq;
+using Apsiyon.Utilities.Results;
 using Microsoft.EntityFrameworkCore;
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Linq.Expressions;
+using System.Threading.Tasks;
 
 namespace Apsiyon.DataAcccess.EntityFramework
 {
-    public class EfRepositoryBase<TEntity, TContext> : IEntityRepository<TEntity>
-        where TEntity : class, IEntity, new()
-        where TContext : DbContext, new()
+    public class EfRepositoryBase<TEntity, TContext> : IEntityRepository<TEntity> where TEntity : class, IEntity, new() where TContext : DbContext, new()
     {
-        public void Add(TEntity entity)
+        protected TContext Context { get; }
+        protected readonly DbSet<TEntity> dbSet;
+
+        protected EfRepositoryBase(TContext dbContext)
         {
-            using (var context = new TContext())
-            {
-                var addedEntity = context.Entry(entity);
-                addedEntity.State = EntityState.Added;
-                context.SaveChanges();
-            }
+            Context = dbContext;
+            dbSet = dbContext.Set<TEntity>();
         }
 
-        public void Delete(TEntity entity)
+        public async Task AddAsync(TEntity entity)
         {
-            using (var context = new TContext())
-            {
-                var addedEntity = context.Entry(entity);
-                addedEntity.State = EntityState.Deleted;
-                context.SaveChanges();
-            }
+            await Context.Set<TEntity>().AddAsync(entity).ConfigureAwait(false);
+            Context.SaveChanges();
         }
 
-        public TEntity Get(Expression<Func<TEntity, bool>> filter)
+        public async Task DeleteAsync(TEntity entity)
         {
-            using (var context = new TContext())
-            {
-                return context.Set<TEntity>().SingleOrDefault(filter);
-            }
+            await Task.Run(() => { Context.Set<TEntity>().Remove(entity); });
+            Context.SaveChanges();
         }
 
-        public List<TEntity> GetList(Expression<Func<TEntity, bool>> filter = null)
+        public async Task<IQueryable<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> filter = null, PaginationQuery paginationQuery = null, params Expression<Func<TEntity, object>>[] includeEntities)
         {
-            using (var context = new TContext())
+            IQueryable<TEntity> query = Context.Set<TEntity>();
+
+            if (filter != null)
+                query = query.Where(filter);
+
+            if (includeEntities.Length > 0)
+                query = query.IncludeMultiple(includeEntities);
+
+            if (paginationQuery != null)
             {
-                return filter == null ?
-                    context.Set<TEntity>().ToList()
-                    :
-                    context.Set<TEntity>().Where(filter).ToList();
+                var skip = (paginationQuery.PageNumber - 1) * paginationQuery.PageSize;
+                query = query.Skip(skip).Take(paginationQuery.PageSize);
             }
+
+            return query;
         }
 
-        public void Update(TEntity entity)
+        public async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> filter, params Expression<Func<TEntity, object>>[] includeEntities)
         {
-            using (var context = new TContext())
-            {
-                var addedEntity = context.Entry(entity);
-                addedEntity.State = EntityState.Modified;
-                context.SaveChanges();
-            }
+            IQueryable<TEntity> query = Context.Set<TEntity>();
+
+            if (filter != null)
+                query = query.Where(filter);
+            if (includeEntities.Length > 0)
+                query = query.IncludeMultiple(includeEntities);
+
+            return await query.SingleOrDefaultAsync();
+        }
+
+        public async Task UpdateAsync(TEntity entity)
+        {
+            await Task.Run(() => { Context.Set<TEntity>().Update(entity); });
+            Context.SaveChanges();
         }
     }
 }
