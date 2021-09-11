@@ -7,8 +7,8 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageTags>AOP, Aspect, Validations, Exceptions, Logs, Paging, Cross Cutting Concors</PackageTags>
     <RepositoryUrl>https://github.com/vmutlu/ApsiyonFramework</RepositoryUrl>
-    <PackageReleaseNotes>Api return types edited</PackageReleaseNotes>
-    <Version>1.0.6</Version>
+    <PackageReleaseNotes>Updated the generic repository class.</PackageReleaseNotes>
+    <Version>1.0.7</Version>
   </PropertyGroup>
 
 	<ItemGroup>

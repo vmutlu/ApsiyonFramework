@@ -12,30 +12,26 @@ namespace Apsiyon.DataAcccess.EntityFramework
 {
     public class EfRepositoryBase<TEntity, TContext> : IEntityRepository<TEntity> where TEntity : Entity, new() where TContext : DbContext, new()
     {
-        protected TContext Context { get; }
-        protected readonly DbSet<TEntity> dbSet;
+        protected readonly DbSet<TEntity> _dbSet;
 
         protected EfRepositoryBase(TContext dbContext)
         {
-            Context = dbContext;
-            dbSet = dbContext.Set<TEntity>();
+            _dbSet = dbContext.Set<TEntity>();
         }
 
         public async Task AddAsync(TEntity entity)
         {
-            await Context.Set<TEntity>().AddAsync(entity).ConfigureAwait(false);
-            await Context.SaveChangesAsync();
+            await _dbSet.AddAsync(entity).ConfigureAwait(false);
         }
 
         public async Task DeleteAsync(TEntity entity)
         {
-            await Task.Run(() => { Context.Set<TEntity>().Remove(entity); });
-            await Context.SaveChangesAsync();
+            await Task.Run(() => { _dbSet.Remove(entity); });
         }
 
         public async Task<List<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> filter = null, PaginationQuery paginationQuery = null, params Expression<Func<TEntity, object>>[] includeEntities)
         {
-            IQueryable<TEntity> query = Context.Set<TEntity>();
+            IQueryable<TEntity> query = _dbSet;
 
             if (filter != null)
                 query = query.Where(filter);
@@ -54,7 +50,7 @@ namespace Apsiyon.DataAcccess.EntityFramework
 
         public async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> filter, params Expression<Func<TEntity, object>>[] includeEntities)
         {
-            IQueryable<TEntity> query = Context.Set<TEntity>();
+            IQueryable<TEntity> query = _dbSet;
 
             if (filter != null)
                 query = query.Where(filter);
@@ -66,8 +62,7 @@ namespace Apsiyon.DataAcccess.EntityFramework
 
         public async Task UpdateAsync(TEntity entity)
         {
-            await Task.Run(() => { Context.Set<TEntity>().Update(entity); });
-            await Context.SaveChangesAsync();
+            await Task.Run(() => { _dbSet.Update(entity); });
         }
     }
 }
