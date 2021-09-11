@@ -5,7 +5,6 @@ using Apsiyon.Utilities.Messages;
 using Castle.DynamicProxy;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
-using System;
 
 namespace Apsiyon.Aspects.Autofac.UsersAspect
 {
