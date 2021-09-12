@@ -13,20 +13,24 @@ namespace Apsiyon.DataAcccess.EntityFramework
     public class EfRepositoryBase<TEntity, TContext> : IEntityRepository<TEntity> where TEntity : Entity, new() where TContext : DbContext, new()
     {
         protected readonly DbSet<TEntity> _dbSet;
+        protected readonly TContext _dbContext;
 
         protected EfRepositoryBase(TContext dbContext)
         {
+            _dbContext = dbContext;
             _dbSet = dbContext.Set<TEntity>();
         }
 
         public async Task AddAsync(TEntity entity)
         {
             await _dbSet.AddAsync(entity).ConfigureAwait(false);
+            await _dbContext.SaveChangesAsync().ConfigureAwait(false);
         }
 
         public async Task DeleteAsync(TEntity entity)
         {
             await Task.Run(() => { _dbSet.Remove(entity); });
+            await _dbContext.SaveChangesAsync().ConfigureAwait(false);
         }
 
         public async Task<List<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> filter = null, PaginationQuery paginationQuery = null, params Expression<Func<TEntity, object>>[] includeEntities)
@@ -63,6 +67,7 @@ namespace Apsiyon.DataAcccess.EntityFramework
         public async Task UpdateAsync(TEntity entity)
         {
             await Task.Run(() => { _dbSet.Update(entity); });
+            await _dbContext.SaveChangesAsync().ConfigureAwait(false);
         }
     }
 }

@@ -16,7 +16,7 @@ namespace Apsiyon.Aspects.Autofac.Caching
             _duration = duration;
             _cacheManager = ServiceTool.ServiceProvider.GetService<ICacheManager>();
         }
-        protected override void OnBefore(IInvocation invocation)
+        public override void Intercept(IInvocation invocation)
         {
             var methodName = string.Format($"{invocation.Method.ReflectedType.FullName}.{invocation.Method.Name}");
             var arguments = invocation.Arguments.ToList();
