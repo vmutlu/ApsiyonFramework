@@ -7,8 +7,8 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageTags>AOP, Aspect, Validations, Exceptions, Logs, Paging, Cross Cutting Concors</PackageTags>
     <RepositoryUrl>https://github.com/vmutlu/ApsiyonFramework</RepositoryUrl>
-    <PackageReleaseNotes>Bug fixed</PackageReleaseNotes>
-    <Version>1.0.8</Version>
+    <PackageReleaseNotes>Claim classes are organized</PackageReleaseNotes>
+    <Version>1.0.9</Version>
   </PropertyGroup>
 
 	<ItemGroup>

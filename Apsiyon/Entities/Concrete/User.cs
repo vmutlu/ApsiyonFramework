@@ -1,4 +1,5 @@
 ﻿using Apsiyon.Entities.Abstract;
+using System.Collections.Generic;
 
 namespace Apsiyon.Entities.Concrete
 {
@@ -10,5 +11,6 @@ namespace Apsiyon.Entities.Concrete
         public byte[] PasswordSalt { get; set; }
         public byte[] PasswordHash{ get; set; }
         public bool Status{ get; set; }
+        public List<UserOperationClaim> UserOperationClaims { get; set; }
     }
 }
