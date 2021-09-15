@@ -9,13 +9,13 @@
 ### Package Manager Console
 
 ```
-PM> Install-Package Apsiyon -Version 1.0.9
+PM> Install-Package Apsiyon -Version 2.0.0
 ```
 
 ### .NET CLI Console
 
 ```
-> dotnet add package Apsiyon --version 1.0.9
+> dotnet add package Apsiyon --version 2.0.0
 ```
 
 ## Project Description
