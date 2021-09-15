@@ -1,8 +1,15 @@
-<p align="center">
+ <h1 align="center"> 
+  Apsiyon Framework
+ </h1>
+ 
+<p align="center"> 
   <img src="https://user-images.githubusercontent.com/50150182/133311138-b29b279b-d54f-45c3-8794-0aa604e211b0.png" width="250">
 </p>
 
-# Apsiyon Framework ![GitHub](https://img.shields.io/github/license/vmutlu/ApsiyonFramework) ![AppVeyor](https://img.shields.io/appveyor/build/vmutlu/apsiyonframework) ![Nuget](https://img.shields.io/nuget/v/Apsiyon) ![Nuget](https://img.shields.io/nuget/dt/Apsiyon) [![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/vmutlu/ApsiyonFramework)
+<div align="center"> 
+  
+![GitHub](https://img.shields.io/github/license/vmutlu/ApsiyonFramework) ![AppVeyor](https://img.shields.io/appveyor/build/vmutlu/apsiyonframework) ![Nuget](https://img.shields.io/nuget/v/Apsiyon) ![Nuget](https://img.shields.io/nuget/dt/Apsiyon) [![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/vmutlu/ApsiyonFramework)
+</div>
 
 ## Install
 
