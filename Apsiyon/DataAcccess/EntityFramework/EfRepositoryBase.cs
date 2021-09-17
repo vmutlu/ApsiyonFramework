@@ -1,4 +1,5 @@
 ﻿using Apsiyon.Entities.Abstract;
+using Apsiyon.Enums;
 using Apsiyon.Utilities.Linq;
 using Apsiyon.Utilities.Results;
 using Microsoft.EntityFrameworkCore;
@@ -33,7 +34,7 @@ namespace Apsiyon.DataAcccess.EntityFramework
             await _dbContext.SaveChangesAsync().ConfigureAwait(false);
         }
 
-        public async Task<List<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> filter = null, PaginationQuery paginationQuery = null, params Expression<Func<TEntity, object>>[] includeEntities)
+        public async Task<List<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> filter = null, params Expression<Func<TEntity, object>>[] includeEntities)
         {
             IQueryable<TEntity> query = _dbSet;
 
@@ -43,13 +44,28 @@ namespace Apsiyon.DataAcccess.EntityFramework
             if (includeEntities.Length > 0)
                 query = query.IncludeMultiple(includeEntities);
 
-            if (paginationQuery != null)
-            {
-                var skip = (paginationQuery.PageNumber - 1) * paginationQuery.PageSize;
-                query = query.Skip(skip).Take(paginationQuery.PageSize);
-            }
-
             return await query.ToListAsync();
+        }
+
+        public async Task<PagingResult<TEntity>> GetAllForPagingAsync(int page, string propertyName, bool asc, Expression<Func<TEntity, bool>> filter = null, params Expression<Func<TEntity, object>>[] includeEntities)
+        {
+            using (var context = new TContext())
+            {
+                var list = context.Set<TEntity>().AsQueryable();
+
+                if (includeEntities.Length > 0)
+                    list = list.IncludeMultiple(includeEntities);
+
+                if (filter != null)
+                    list = list.Where(filter).AsQueryable();
+
+                list = asc ? list.AscOrDescOrder(ESort.Asc, propertyName) : list.AscOrDescOrder(ESort.Desc, propertyName);
+                int totalCount = list.Count();
+                var start = (page - 1) * 10;
+                list = list.Skip(start).Take(10);
+
+                return new PagingResult<TEntity>(await list.ToListAsync(), totalCount, true, $"{totalCount} adet kayıt listelendi.");
+            }
         }
 
         public async Task<TEntity> GetAsync(Expression<Func<TEntity, bool>> filter, params Expression<Func<TEntity, object>>[] includeEntities)
