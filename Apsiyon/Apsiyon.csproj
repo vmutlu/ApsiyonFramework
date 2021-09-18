@@ -7,8 +7,8 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageTags>AOP, Aspect, Validations, Exceptions, Logs, Paging, Cross Cutting Concors</PackageTags>
     <RepositoryUrl>https://github.com/vmutlu/ApsiyonFramework</RepositoryUrl>
-    <PackageReleaseNotes>Created helper model class for filtering</PackageReleaseNotes>
-    <Version>2.0.2</Version>
+    <PackageReleaseNotes>Added synchronous methods</PackageReleaseNotes>
+    <Version>2.0.3</Version>
     <PackageIcon>apsiyon.png</PackageIcon>
     <PackageIconUrl />
   </PropertyGroup>

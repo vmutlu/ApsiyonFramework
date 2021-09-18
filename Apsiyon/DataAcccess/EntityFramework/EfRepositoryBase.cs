@@ -28,10 +28,22 @@ namespace Apsiyon.DataAcccess.EntityFramework
             await _dbContext.SaveChangesAsync().ConfigureAwait(false);
         }
 
+        public void Add(TEntity entity)
+        {
+            _dbSet.Add(entity);
+            _dbContext.SaveChanges();
+        }
+
         public async Task DeleteAsync(TEntity entity)
         {
             await Task.Run(() => { _dbSet.Remove(entity); });
             await _dbContext.SaveChangesAsync().ConfigureAwait(false);
+        }
+
+        public void Delete(TEntity entity)
+        {
+            _dbSet.Remove(entity);
+            _dbContext.SaveChanges();
         }
 
         public async Task<List<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> filter = null, params Expression<Func<TEntity, object>>[] includeEntities)
@@ -84,6 +96,12 @@ namespace Apsiyon.DataAcccess.EntityFramework
         {
             await Task.Run(() => { _dbSet.Update(entity); });
             await _dbContext.SaveChangesAsync().ConfigureAwait(false);
+        }
+
+        public void Update(TEntity entity)
+        {
+            _dbSet.Update(entity);
+            _dbContext.SaveChanges();
         }
     }
 }
