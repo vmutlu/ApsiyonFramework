@@ -7,8 +7,8 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageTags>AOP, Aspect, Validations, Exceptions, Logs, Paging, Cross Cutting Concors</PackageTags>
     <RepositoryUrl>https://github.com/vmutlu/ApsiyonFramework</RepositoryUrl>
-    <PackageReleaseNotes>Added synchronous methods</PackageReleaseNotes>
-    <Version>2.0.3</Version>
+    <PackageReleaseNotes>Added helper class for mail sendings</PackageReleaseNotes>
+    <Version>2.0.4</Version>
     <PackageIcon>apsiyon.png</PackageIcon>
     <PackageIconUrl />
   </PropertyGroup>
