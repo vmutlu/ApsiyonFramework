@@ -5,10 +5,10 @@
     <Authors>Veysel MUTLU</Authors>
     <Description>Apsiyon framework is a helpful framework that creates your .Net projects in the simplest way, does cross cutting concerns for you and helps you to write code faster in your projects.</Description>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
-    <PackageTags>AOP, Aspect, Validations, Exceptions, Logs, Paging, Cross Cutting Concors</PackageTags>
+    <PackageTags>AOP, Aspect, Validations, Exceptions, Logs, Paging, Cross Cutting Concors, Encrypt, Decrypt</PackageTags>
     <RepositoryUrl>https://github.com/vmutlu/ApsiyonFramework</RepositoryUrl>
-    <PackageReleaseNotes>Added helper class for mail sendings</PackageReleaseNotes>
-    <Version>2.0.4</Version>
+    <PackageReleaseNotes>Added separate helper class for encryption</PackageReleaseNotes>
+    <Version>2.0.5</Version>
     <PackageIcon>apsiyon.png</PackageIcon>
     <PackageIconUrl />
   </PropertyGroup>
