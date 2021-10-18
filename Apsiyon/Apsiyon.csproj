@@ -7,8 +7,8 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageTags>AOP, Aspect, Validations, Exceptions, Logs, Paging, Cross Cutting Concors, Encrypt, Decrypt</PackageTags>
     <RepositoryUrl>https://github.com/vmutlu/ApsiyonFramework</RepositoryUrl>
-    <PackageReleaseNotes>Added separate helper class for encryption</PackageReleaseNotes>
-    <Version>2.0.5</Version>
+    <PackageReleaseNotes>project dependencies updated</PackageReleaseNotes>
+    <Version>2.0.6</Version>
     <PackageIcon>apsiyon.png</PackageIcon>
     <PackageIconUrl />
   </PropertyGroup>
