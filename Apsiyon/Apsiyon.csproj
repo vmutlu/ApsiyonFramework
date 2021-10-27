@@ -7,8 +7,8 @@
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageTags>AOP, Aspect, Validations, Exceptions, Logs, Paging, Cross Cutting Concors, Encrypt, Decrypt</PackageTags>
     <RepositoryUrl>https://github.com/vmutlu/ApsiyonFramework</RepositoryUrl>
-    <PackageReleaseNotes>project dependencies updated</PackageReleaseNotes>
-    <Version>2.0.6</Version>
+    <PackageReleaseNotes>Added multiple insertion, deletion and update methods</PackageReleaseNotes>
+    <Version>2.0.7</Version>
     <PackageIcon>apsiyon.png</PackageIcon>
     <PackageIconUrl />
   </PropertyGroup>
