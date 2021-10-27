@@ -28,6 +28,20 @@ namespace Apsiyon.DataAcccess.EntityFramework
             await _dbContext.SaveChangesAsync().ConfigureAwait(false);
         }
 
+        public async Task AddRangeAsync(IEnumerable<TEntity> entities)
+        {
+            await _dbSet.AddRangeAsync(entities).ConfigureAwait(false);
+
+            await _dbContext.SaveChangesAsync().ConfigureAwait(false);
+        }
+
+        public void AddRange(IEnumerable<TEntity> entities)
+        {
+            _dbSet.AddRange(entities);
+
+            _dbContext.SaveChangesAsync();
+        }
+
         public void Add(TEntity entity)
         {
             _dbSet.Add(entity);
@@ -44,6 +58,15 @@ namespace Apsiyon.DataAcccess.EntityFramework
         {
             _dbSet.Remove(entity);
             _dbContext.SaveChanges();
+        }
+
+        public async Task DeleteAsync(IEnumerable<TEntity> entities)
+        {
+            InitalizeEdit(entities);
+
+            _dbContext.Set<TEntity>().RemoveRange(entities);
+
+            await _dbContext.SaveChangesAsync().ConfigureAwait(false);
         }
 
         public async Task<List<TEntity>> GetAllAsync(Expression<Func<TEntity, bool>> filter = null, params Expression<Func<TEntity, object>>[] includeEntities)
@@ -98,10 +121,29 @@ namespace Apsiyon.DataAcccess.EntityFramework
             await _dbContext.SaveChangesAsync().ConfigureAwait(false);
         }
 
+        public async Task UpdateAsync(IEnumerable<TEntity> entities)
+        {
+            InitalizeEdit(entities);
+
+            _dbSet.UpdateRange(entities);
+
+            await _dbContext.SaveChangesAsync().ConfigureAwait(false);
+        }
+
         public void Update(TEntity entity)
         {
             _dbSet.Update(entity);
             _dbContext.SaveChanges();
+        }
+
+        void InitalizeEdit(IEnumerable<TEntity> entities)
+        {
+            var entity = _dbSet.Local.Where(e => entities.Any(en => en.Id.Equals(e.Id)));
+            if (!entity?.Any() ?? false)
+                return;
+
+            foreach (var res in entity)
+                _dbContext.Entry(res).State = EntityState.Detached;
         }
     }
 }
