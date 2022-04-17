@@ -34,3 +34,7 @@ Apsiyon framework is a helpful framework that creates your .Net projects in the 
 ## Example usage
 
 You can find and review all the information and usage patterns on how to use this framework in my project at "https://github.com/vmutlu/NetCoreBackend".
+
+## Give a Star! :star:
+If you like or are using this project to learn or start your solution, please give it a star. Thanks!
+
