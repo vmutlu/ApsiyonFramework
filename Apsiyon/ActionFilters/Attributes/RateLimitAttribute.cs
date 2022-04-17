@@ -1,0 +1,151 @@
+﻿using Apsiyon.ActionFilters.Abstract;
+using Apsiyon.Enums;
+using Apsiyon.Extensions;
+using Apsiyon.Models;
+using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc.Filters;
+using Microsoft.AspNetCore.Routing;
+using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Options;
+using Newtonsoft.Json;
+using System;
+using System.Linq;
+using System.Threading.Tasks;
+
+namespace Apsiyon.ActionFilters.Attributes
+{
+    public class RateLimitAttribute : IAsyncActionFilter, IOrderedFilter
+    {
+        private readonly ILogger<RateLimitAttribute> _logger;
+        private readonly IRateLimitService _rateLimitService;
+        private readonly IOptions<RateLimitOptions> _options;
+
+        public RateLimitAttribute(ILogger<RateLimitAttribute> logger, IRateLimitService rateLimitService, IOptions<RateLimitOptions> options)
+        {
+            _logger = logger;
+            _rateLimitService = rateLimitService;
+            _options = options;
+        }
+
+        public int Order { get; set; }
+        public int PeriodInSec { get; set; }
+        public int Limit { get; set; }
+        public string RouteParams { get; set; }
+        public string QueryParams { get; set; }
+        public RateLimitScope Scope { get; set; }
+
+        public async Task OnActionExecutionAsync(ActionExecutingContext context, ActionExecutionDelegate next)
+        {
+            try
+            {
+                if (!_options.Value.EnableRateLimit)
+                {
+                    await next.Invoke();
+                    return;
+                }
+
+                var userIp = context.HttpContext.Request.GetUserIp(_options.Value.IpHeaderName)?.ToString();
+
+                if (_options.Value.IpWhiteList.Contains(userIp))
+                {
+                    await next.Invoke();
+                    return;
+                }
+
+                var requestKey = userIp;
+
+                if (!string.IsNullOrWhiteSpace(_options.Value.ClientIdentifier) &&
+                    context.HttpContext.Request.Headers.TryGetValue(_options.Value.ClientIdentifier, out var clientId))
+                {
+                    if (_options.Value.ClientIdentifierWhiteList.Contains(clientId))
+                        return;
+
+                    requestKey = clientId.ToString();
+                }
+
+                var filters = context.Filters;
+                if (filters.OfType<IIgnoreRateLimitFilter>().Any())
+                {
+                    await next.Invoke();
+                    return;
+                }
+
+                var rateLimitKey = ProvideRateLimitKey(context, requestKey);
+
+                var hasAccess = await _rateLimitService.HasAccessAsync(rateLimitKey, PeriodInSec, Limit);
+
+                if (!hasAccess)
+                {
+                    context.HttpContext.Response.StatusCode = _options.Value.HttpStatusCode;
+
+                    context.HttpContext.Response.ContentType = "application/json";
+
+                    var response = new RateLimitResponse()
+                    {
+                        Code = _options.Value.HttpStatusCode,
+                        Message = _options.Value.ErrorMessage
+                    };
+
+                    await context.HttpContext.Response.WriteAsync(JsonConvert.SerializeObject(response));
+                }
+                else
+                    await next.Invoke();
+            }
+            catch (Exception e)
+            {
+                _logger.LogCritical(e, e.Message);
+                await next.Invoke();
+            }
+        }
+
+        private string ProvideRateLimitKey(ActionExecutingContext context, string requestKey)
+        {
+            context.ActionDescriptor.RouteValues.TryGetValue("Controller", out var controller);
+            context.ActionDescriptor.RouteValues.TryGetValue("Action", out var action);
+
+            var rateLimitKey = $"{requestKey}:{controller}";
+
+            if (Scope == RateLimitScope.Action)
+                rateLimitKey = $"{rateLimitKey}:{action}";
+
+
+            if (!string.IsNullOrEmpty(RouteParams))
+            {
+                var parameters = RouteParams.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+                foreach (var parameter in parameters)
+                {
+                    if (context.HttpContext.GetRouteData().Values.TryGetValue(parameter, out var routeValue))
+                        rateLimitKey += $"{routeValue}:";
+                }
+            }
+
+            if (!string.IsNullOrEmpty(QueryParams))
+            {
+                var parameters = QueryParams.Split(new[] { ',' }, StringSplitOptions.RemoveEmptyEntries);
+
+                foreach (var parameter in parameters)
+                {
+                    if (context.HttpContext.Request.Query.TryGetValue(parameter, out _))
+                    {
+                        var items = context.HttpContext.Request.Query[parameter].ToArray();
+
+                        switch (items.Length)
+                        {
+                            case 0:
+                                continue;
+                            case 1:
+                                rateLimitKey += $"{items[0]}:";
+                                break;
+                            default:
+                                rateLimitKey += string.Join(":", items);
+                                break;
+                        }
+                    }
+                }
+            }
+
+            return rateLimitKey;
+        }
+    }
+}
