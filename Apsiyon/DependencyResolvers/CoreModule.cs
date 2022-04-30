@@ -1,5 +1,6 @@
 ﻿using Apsiyon.CrossCuttingConcerns.Caching;
 using Apsiyon.CrossCuttingConcerns.Caching.Microsoft;
+using Apsiyon.MessageBrokers.RabbitMq;
 using Apsiyon.Utilities.IoC;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.DependencyInjection;
@@ -15,6 +16,9 @@ namespace Apsiyon.DependencyResolvers
             services.AddSingleton<ICacheManager, MemoryCacheManager>();
             services.AddSingleton<IHttpContextAccessor, HttpContextAccessor>();
             services.AddSingleton<Stopwatch>();
+
+            services.AddTransient<IMessageBrokerHelper, MqQueueHelper>();
+            services.AddTransient<IMessageConsumer, MqConsumerHelper>();
         }
     }
 }

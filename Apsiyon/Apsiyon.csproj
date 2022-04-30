@@ -4,11 +4,10 @@
     <TargetFramework>net5.0</TargetFramework>
     <Authors>Veysel MUTLU</Authors>
     <Description>Apsiyon framework is a helpful framework that creates your .Net projects in the simplest way, does cross cutting concerns for you and helps you to write code faster in your projects.</Description>
-    <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageTags>AOP, Aspect, Validations, Exceptions, Logs, Paging, Cross Cutting Concors, Encrypt, Decrypt, RateLimiting</PackageTags>
     <RepositoryUrl>https://github.com/vmutlu/ApsiyonFramework</RepositoryUrl>
-    <PackageReleaseNotes>Added multiple insertion, deletion and update methods</PackageReleaseNotes>
-    <Version>2.0.9</Version>
+    <PackageReleaseNotes>Added rabbit mq implementation</PackageReleaseNotes>
+    <Version>3.0.0</Version>
     <PackageIcon>apsiyon.png</PackageIcon>
     <PackageIconUrl />
   </PropertyGroup>
@@ -34,9 +33,11 @@
 		<PackageReference Include="Microsoft.Extensions.Configuration.Binder" Version="5.0.0" />
 		<PackageReference Include="Microsoft.Extensions.Hosting" Version="5.0.0" />
 		<PackageReference Include="Microsoft.IdentityModel.Tokens" Version="6.13.1" />
+		<PackageReference Include="RabbitMQ.Client" Version="6.2.2" />
 		<PackageReference Include="NETStandard.Library" Version="2.0.3" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
 		<PackageReference Include="RedLock.net" Version="2.3.2" />
+		<PackageReference Include="ServiceStack.Redis" Version="6.0.2" />
 		<PackageReference Include="StackExchange.Redis" Version="2.5.61" />
 		<PackageReference Include="System.IdentityModel.Tokens.Jwt" Version="6.13.1" />
 	</ItemGroup>
