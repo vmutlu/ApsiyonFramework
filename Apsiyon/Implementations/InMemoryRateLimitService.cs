@@ -12,12 +12,14 @@ namespace Apsiyon.Implementations
     {
         private readonly IMemoryCache _memoryCache;
         private readonly ILogger<InMemoryRateLimitService> _logger;
-        private readonly AsyncKeyedLocker<string> _lockProvider = new AsyncKeyedLocker<string>();
+        private readonly AsyncKeyedLocker<string> _lockProvider;
         public InMemoryRateLimitService(IMemoryCache memoryCache,
-            ILogger<InMemoryRateLimitService> logger)
+            ILogger<InMemoryRateLimitService> logger,
+            AsyncKeyedLocker<string> lockProvider)
         {
             _memoryCache = memoryCache;
             _logger = logger;
+            _lockProvider = lockProvider;
         }
 
         public async Task<bool> HasAccessAsync(string resourceKey, int periodInSec, int limit)
