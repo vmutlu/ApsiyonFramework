@@ -1,5 +1,6 @@
 ﻿using Apsiyon.ActionFilters.Abstract;
 using Apsiyon.Models;
+using AsyncKeyedLock;
 using Microsoft.Extensions.Caching.Memory;
 using Microsoft.Extensions.Logging;
 using System;
@@ -11,7 +12,7 @@ namespace Apsiyon.Implementations
     {
         private readonly IMemoryCache _memoryCache;
         private readonly ILogger<InMemoryRateLimitService> _logger;
-        private readonly LockProvider<string> _lockProvider = new LockProvider<string>();
+        private readonly AsyncKeyedLocker<string> _lockProvider = new AsyncKeyedLocker<string>();
         public InMemoryRateLimitService(IMemoryCache memoryCache,
             ILogger<InMemoryRateLimitService> logger)
         {
@@ -21,9 +22,7 @@ namespace Apsiyon.Implementations
 
         public async Task<bool> HasAccessAsync(string resourceKey, int periodInSec, int limit)
         {
-            await _lockProvider.WaitAsync(resourceKey);
-
-            try
+            using (await _lockProvider.LockAsync(resourceKey).ConfigureAwait(false))
             {
                 //if limit set to 0 or less than zero so no need to check limit and block the request
                 if (limit <= 0)
@@ -60,10 +59,6 @@ namespace Apsiyon.Implementations
                 }
 
                 _memoryCache.Set(resourceKey, cacheEntry, TimeSpan.FromSeconds(periodInSec));
-            }
-            finally
-            {
-                _lockProvider.Release(resourceKey);
             }
 
             return true;
