@@ -8,7 +8,7 @@
 
 <div align="center"> 
   
-![GitHub](https://img.shields.io/github/license/vmutlu/ApsiyonFramework) ![AppVeyor](https://img.shields.io/appveyor/build/vmutlu/apsiyonframework) ![Nuget](https://img.shields.io/nuget/v/Apsiyon) ![Nuget](https://img.shields.io/nuget/dt/Apsiyon) [![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/vmutlu/ApsiyonFramework)
+[![GitHub](https://img.shields.io/github/license/vmutlu/ApsiyonFramework)](https://github.com/vmutlu/ApsiyonFramework/blob/master/LICENSE) [![AppVeyor](https://img.shields.io/appveyor/build/vmutlu/apsiyonframework)](https://actions-badge.atrox.dev/vmutlu/ApsiyonFramework/goto?ref=master) ![Nuget](https://img.shields.io/nuget/v/Apsiyon) ![Nuget](https://img.shields.io/nuget/dt/Apsiyon) [![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/vmutlu/ApsiyonFramework)
 </div>
 
 ## Install
