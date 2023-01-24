@@ -8,7 +8,7 @@
 
 <div align="center"> 
   
-![GitHub](https://img.shields.io/github/license/vmutlu/ApsiyonFramework) ![AppVeyor](https://img.shields.io/appveyor/build/vmutlu/apsiyonframework) ![Nuget](https://img.shields.io/nuget/v/Apsiyon) ![Nuget](https://img.shields.io/nuget/dt/Apsiyon) [![Open in Visual Studio Code](https://open.vscode.dev/badges/open-in-vscode.svg)](https://open.vscode.dev/vmutlu/ApsiyonFramework)
+[![GitHub](https://img.shields.io/github/license/vmutlu/ApsiyonFramework)](https://github.com/vmutlu/ApsiyonFramework/blob/master/LICENSE) [![AppVeyor](https://img.shields.io/appveyor/build/vmutlu/apsiyonframework)](https://actions-badge.atrox.dev/vmutlu/ApsiyonFramework/goto?ref=master) [![Nuget](https://img.shields.io/nuget/v/Apsiyon)](https://www.nuget.org/packages/Apsiyon) [![Nuget](https://img.shields.io/nuget/dt/Apsiyon)](https://www.nuget.org/packages/Apsiyon)
 </div>
 
 ## Install
@@ -16,13 +16,13 @@
 ### Package Manager Console
 
 ```
-PM> Install-Package Apsiyon -Version 2.0.0
+PM> Install-Package Apsiyon
 ```
 
 ### .NET CLI Console
 
 ```
-> dotnet add package Apsiyon --version 2.0.0
+> dotnet add package Apsiyon
 ```
 
 ## Project Description
@@ -37,4 +37,3 @@ You can find and review all the information and usage patterns on how to use thi
 
 ## Give a Star! :star:
 If you like or are using this project to learn or start your solution, please give it a star. Thanks!
-
